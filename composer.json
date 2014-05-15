@@ -1,0 +1,26 @@
+{
+    "name": "larrytech/auth",
+    "description": "Authentication, Permissions and Roles for Laravel",
+    "keywords": ["authentication", "laravel", "permissions"],
+    "authors": [
+        {
+            "name": "George Robinson",
+            "email": "george@rbsn.me"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "mockery/mockery": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "src/controllers",
+            "src/migrations",
+            "src/models"
+        ],
+        "psr-0": {
+            "Larrytech\\Auth": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
