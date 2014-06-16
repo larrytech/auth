@@ -83,6 +83,19 @@ class User extends Model implements UserInterface, RemindableInterface {
     {
         return $this->confirmation_hash;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getConstraints()
+    {
+        return array(
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$this->id,
+            'password' => 'required'
+        );
+    }
     
     /**
      *  Gets the email address.

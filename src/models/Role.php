@@ -17,6 +17,16 @@ class Role extends Model {
     protected $fillable = array('name');
 
     /**
+     * {@inheritDoc}
+     */
+    public function getConstraints()
+    {
+        return array(
+            'name' => 'required|unique:roles,name,'.$this->id
+        );
+    }
+
+    /**
      * Gets the name of a role.
      * 
      * @return string
