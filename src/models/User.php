@@ -3,6 +3,7 @@
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use InvalidArugmentException;
 
 class User extends Model implements UserInterface, RemindableInterface {
@@ -179,6 +180,16 @@ class User extends Model implements UserInterface, RemindableInterface {
     public function getReminderEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Gets the validator for the model.
+     *
+     * @return \Illuminate\Validation\Validator
+     */
+    public function getValidator()
+    {
+        return Validator::make($this->toArray(), $this->getConstraints());
     }
 
     /**

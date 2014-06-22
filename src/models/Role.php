@@ -1,5 +1,7 @@
 <?php namespace Larrytech\Auth\Models;
 
+use Illuminate\Support\Facades\Validator;
+
 class Role extends Model {
 
     /**
@@ -34,6 +36,16 @@ class Role extends Model {
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Gets the validator for the model.
+     *
+     * @return \Illuminate\Validation\Validator
+     */
+    public function getValidator()
+    {
+        return Validator::make($this->toArray(), $this->getConstraints());
     }
 
     /**
