@@ -2,8 +2,8 @@
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
+use InvalidArugmentException;
 
 class User extends Model implements UserInterface, RemindableInterface {
 
@@ -44,13 +44,19 @@ class User extends Model implements UserInterface, RemindableInterface {
      *
      * @param mixed $role The role.
      * @return \Larrytech\Auth\Models\Role
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @throws \InvalidArugmentException
+     * @throws \Larrytech\Auth\Models\DuplicateRoleException
      */
     public function assignRole($role)
     {
         if ($role == null)
         {
-            throw new ModelNotFoundException;
+            throw new InvalidArgumentException;
+        }
+
+        if ($this->hasRole($role))
+        {
+            throw new DuplicateRoleException();
         }
 
         if ($role instanceof Role)
@@ -185,7 +191,7 @@ class User extends Model implements UserInterface, RemindableInterface {
     {
         if ($role instanceof Role)
         {
-            return $this->roles->intersect($role)->count() > 0;
+            return $this->roles->intersect($role)->isEmpty() == false;
         }
 
         return $this->roles()->whereName($name)->first() != null;
