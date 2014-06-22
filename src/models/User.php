@@ -42,16 +42,28 @@ class User extends Model implements UserInterface, RemindableInterface {
     /**
      * Assign a user to a given role.
      *
-     * @param string $name The name of the role.
+     * @param mixed $role The role.
      * @return \Larrytech\Auth\Models\Role
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
-    public function assignRole($name)
+    public function assignRole($role)
     {
-        $role = Role::whereName($name)->first();
+        if ($role == null)
+        {
+            throw new ModelNotFoundException;
+        }
 
-        if ($role == null) throw new ModelNotFoundException;
+        if ($role instanceof Role)
+        {
+            return $this->roles()->save($role);
+        }
 
-        return $this->roles()->save($role);
+        if ($relation = Role::whereName($role)->first())
+        {
+            return $this->roles()->save($relation);
+        }
+
+        return $this->roles()->save(Role::create(array('name' => $role)));
     }
 
     /**
@@ -91,9 +103,9 @@ class User extends Model implements UserInterface, RemindableInterface {
     {
         return array(
             'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$this->id,
-            'password' => 'required'
+            'last_name'  => 'required',
+            'email'      => 'required|email|unique:users,email,'.$this->id,
+            'password'   => 'required'
         );
     }
     
@@ -166,11 +178,16 @@ class User extends Model implements UserInterface, RemindableInterface {
     /**
      * Determine if a user has a given role.
      *
-     * @param string $name The name of the role.
+     * @param mixed $role The role.
      * @return bool
      */
-    public function hasRole($name)
+    public function hasRole($role)
     {
+        if ($role instanceof Role)
+        {
+            return $this->roles->intersect($role)->count() > 0;
+        }
+
         return $this->roles()->whereName($name)->first() != null;
     }
     
@@ -197,12 +214,17 @@ class User extends Model implements UserInterface, RemindableInterface {
     /**
      * Revoke a role from the user.
      *
-     * @param string $name The name of the role.
+     * @param string $role The role.
      * @return int
      */
-    public function revokeRole($name)
+    public function revokeRole($role)
     {
-        return $this->roles()->whereName($name)->detach();
+        if ($role instanceof Role)
+        {
+            return $this->roles()->detech($role);
+        }
+
+        return $this->roles()->whereName($role)->detach();
     }
     
     /**
