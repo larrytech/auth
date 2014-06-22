@@ -56,7 +56,7 @@ class User extends Model implements UserInterface, RemindableInterface {
 
         if ($this->hasRole($role))
         {
-            throw new DuplicateRoleException();
+            throw new DuplicateRoleException;
         }
 
         if ($role instanceof Role)
