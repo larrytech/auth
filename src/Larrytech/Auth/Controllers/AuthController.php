@@ -19,7 +19,7 @@ class AuthController extends BaseController {
 			if (Auth::attempt(array(
 					'email'     => Input::get('email'),
 					'password'  => Input::get('password'),
-					'active'    => 1,
+					'activated' => 1,
 					'suspended' => 0), Input::has('remember')))
 			{
 				return Redirect::intended(Config::get('auth::login.redirect'));
