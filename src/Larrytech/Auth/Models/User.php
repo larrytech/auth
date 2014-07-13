@@ -202,7 +202,7 @@ class User extends Model implements UserInterface, RemindableInterface {
     {
         if ($role instanceof Role)
         {
-            return $this->roles->intersect($role)->isEmpty() == false;
+            return $this->roles->contains($role);
         }
 
         return $this->roles()->whereName($role)->first() != null;
