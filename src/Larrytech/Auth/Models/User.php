@@ -36,7 +36,7 @@ class User extends Model implements UserInterface, RemindableInterface {
      */
     public function activate()
     {
-        $this->active = 1;
+        $this->activated = 1;
         $this->confirmation_hash = "";
     }
 
@@ -153,7 +153,7 @@ class User extends Model implements UserInterface, RemindableInterface {
      */
     public function getName()
     {
-        return "$this->first_name $this->last_name";
+        return sprintf("%s %s", $this->first_name, $this->last_name);
     }
 
     /**
@@ -213,9 +213,9 @@ class User extends Model implements UserInterface, RemindableInterface {
      * 
      * @return bool
      */
-    public function isActive()
+    public function isActivated()
     {
-        return $this->active == 1;
+        return $this->activated == 1;
     }
 
     /**
@@ -249,7 +249,7 @@ class User extends Model implements UserInterface, RemindableInterface {
      */
     public function setConfirmationHash()
     {
-        if ($this->isActive())
+        if ($this->isActivated())
         {
             throw new UserActivationException;
         }

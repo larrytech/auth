@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration {
 			$table->string('email', 100);
 			$table->string('password', 60);
 			$table->string('confirmation_hash', 60);
-			$table->boolean('active');
+			$table->boolean('activated');
 			$table->boolean('suspended');
 			$table->timestamps();
 		});

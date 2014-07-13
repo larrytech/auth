@@ -8,7 +8,7 @@ class UserModelTest extends TestCase {
     {
         $u = new User;
         $u->activate();
-        $this->assertTrue($u->isActive());
+        $this->assertTrue($u->isActivated());
     }
 
     public function testSetConfirmationHash()
@@ -26,7 +26,7 @@ class UserModelTest extends TestCase {
     {
         $u = new User;
         $u->activate();
-        $this->assertTrue($u->isActive());
+        $this->assertTrue($u->isActivated());
         $u->setConfirmationHash();
     }
 
