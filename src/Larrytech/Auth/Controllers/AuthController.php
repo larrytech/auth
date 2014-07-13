@@ -16,25 +16,25 @@ class AuthController extends BaseController {
 
 		if (Request::isMethod('POST'))
 		{
-			if (Auth::attempt([
-					'email' => Input::get('email'),
-					'password' => Input::get('password'),
-					'active' => 1,
-					'suspended' => 0], Input::has('remember')))
+			if (Auth::attempt(array(
+					'email'     => Input::get('email'),
+					'password'  => Input::get('password'),
+					'active'    => 1,
+					'suspended' => 0), Input::has('remember')))
 			{
-				return Redirect::intended(Config::get('auth::view.redirect'));
+				return Redirect::intended(Config::get('auth::login.redirect'));
 			}
 
 			return Redirect::back()->with('attempt', false)->withInput();
 		}
 
-		return View::make(Config::get('auth::view.login'), compact('title'));
+		return View::make(Config::get('auth::login.view'), compact('title'));
 	}
 
 	public function logout()
 	{
 		Auth::logout();
-
-		return Redirect::to('/');
+		
+		return Redirect::to(Config::get('auth::logout.redirect'));
 	}
 }

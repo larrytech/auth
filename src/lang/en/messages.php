@@ -8,7 +8,7 @@ return array(
 	|--------------------------------------------------------------------------
 	|
 	| The following language lines contain the default messages used by
-	| the Auth views. Feel free to change each of these messages.
+	| the login views. Feel free to change each of these messages.
 	|
 	*/
 
