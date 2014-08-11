@@ -2,6 +2,7 @@
     "name": "larrytech/auth",
     "description": "Authentication, Permissions and Roles for Laravel",
     "keywords": ["authentication", "laravel", "permissions"],
+    "license": "MIT",
     "authors": [
         {
             "name": "George Robinson",
