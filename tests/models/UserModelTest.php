@@ -20,7 +20,7 @@ class UserModelTest extends TestCase {
     }
 
     /**
-     * @expectedException     \Larrytech\Auth\Models\UserActivationException
+     * @expectedException \Larrytech\Auth\Models\UserActivationException
      */
     public function testSetConfirmationHashThrowsException()
     {
@@ -46,9 +46,21 @@ class UserModelTest extends TestCase {
         $this->assertFalse($u->isSuspended());
     }
 
+    public function testUserGetFullName()
+    {
+        $u = new User(array('first_name' => 'Joe', 'last_name' => 'Bloggs'));
+        $this->assertEquals('Joe Bloggs', $u->name);
+    }
+
     public function testUserGetFullNameAccessor()
     {
         $u = new User(array('first_name' => 'Joe', 'last_name' => 'Bloggs'));
+        $this->assertEquals('Joe Bloggs', $u->getName());
+    }
+
+    public function testUserGetFullNameIsStudlyCase()
+    {
+        $u = new User(array('first_name' => 'joe', 'last_name' => 'bloggs'));
         $this->assertEquals('Joe Bloggs', $u->getName());
     }
 

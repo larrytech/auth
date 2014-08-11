@@ -29,7 +29,7 @@ class Role extends Model {
     }
 
     /**
-     * Gets the name of a role.
+     * Gets the name of the role.
      * 
      * @return string
      */

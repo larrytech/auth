@@ -135,6 +135,17 @@ class User extends Model implements UserInterface, RemindableInterface {
     {
         return $this->first_name;
     }
+
+    /**
+     * Gets the first name.
+     *
+     * @param  string $firstName The first name.
+     * @return string
+     */
+    public function getFirstNameAttribute($firstName)
+    {
+        return ucfirst($firstName);
+    }
     
     /**
      * Gets the last name.
@@ -145,15 +156,36 @@ class User extends Model implements UserInterface, RemindableInterface {
     {
         return $this->last_name;
     }
+
+    /**
+     * Gets the last name.
+     *
+     * @param  string $lastName The last name.
+     * @return string
+     */
+    public function getLastNameAttribute($lastName)
+    {
+        return ucwords($lastName);
+    }
     
     /**
-     * Get the full name.
+     * Gets the full name.
      *
      * @return string
      */
     public function getName()
     {
-        return sprintf("%s %s", $this->first_name, $this->last_name);
+        return $this->name;
+    }
+
+    /**
+     * Gets the full name.
+     *
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
     }
 
     /**
@@ -266,6 +298,28 @@ class User extends Model implements UserInterface, RemindableInterface {
         }
 
         $this->confirmation_hash = str_random(60);
+    }
+
+    /**
+     * Sets the first name.
+     *
+     * @param string $firstName The first name.
+     * @return void
+     */
+    public function setFirstNameAttribute($firstName)
+    {
+        $this->attributes['first_name'] = ucfirst($firstName);
+    }
+
+    /**
+     * Sets the last name.
+     *
+     * @param string $lastName The last name.
+     * @return void
+     */
+    public function setLastNameAttribute($lastName)
+    {
+        $this->attributes['last_name'] = ucwords($lastName);
     }
 
     /**
