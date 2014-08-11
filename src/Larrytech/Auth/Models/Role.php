@@ -71,6 +71,17 @@ class Role extends Model {
     }
 
     /**
+     * Orders the roles by name.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOrderByName($query)
+    {
+        return $query->orderBy('name');
+    }
+
+    /**
      * Get the users for the role.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

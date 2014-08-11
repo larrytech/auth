@@ -243,6 +243,17 @@ class User extends Model implements UserInterface, RemindableInterface {
 
         return $this->roles()->whereName($role)->detach();
     }
+
+    /**
+     * Orders the users by last name and first name.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOrderByName($query)
+    {
+        return $query->orderBy('last_name')->orderBy('first_name');
+    }
     
     /**
      * Sets a confirmation hash.

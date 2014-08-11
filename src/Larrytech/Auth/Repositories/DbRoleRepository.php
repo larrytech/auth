@@ -11,7 +11,7 @@ class DbRoleRepository implements RoleRepositoryInterface {
      */
     public function all()
     {
-        return Role::orderBy('name')->get();
+        return Role::orderByName()->get();
     }
 
     /**

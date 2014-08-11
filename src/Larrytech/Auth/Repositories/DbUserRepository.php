@@ -9,7 +9,7 @@ class DbUserRepository implements UserRepositoryInterface {
      */
     public function all()
     {
-        return User::orderBy('last_name')->orderBy('first_name')->get();
+        return User::orderByName()->get();
     }
 
     /**
