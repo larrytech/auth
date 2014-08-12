@@ -3,7 +3,6 @@
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use InvalidArugmentException;
 
 class User extends Model implements UserInterface, RemindableInterface {
@@ -215,16 +214,6 @@ class User extends Model implements UserInterface, RemindableInterface {
     }
 
     /**
-     * Gets the validator for the model.
-     *
-     * @return \Illuminate\Validation\Validator
-     */
-    public function getValidator()
-    {
-        return Validator::make($this->toArray(), $this->getConstraints());
-    }
-
-    /**
      * Determine if a user has a given role.
      *
      * @param mixed $role The role.
@@ -274,6 +263,19 @@ class User extends Model implements UserInterface, RemindableInterface {
         }
 
         return $this->roles()->whereName($role)->detach();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function save(array $options = array())
+    {
+        if ( ! $this->exists)
+        {
+            $this->setConfirmationHash();
+        }
+
+        return parent::save($options);
     }
 
     /**
