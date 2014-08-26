@@ -11,23 +11,23 @@ class UserModelTest extends TestCase {
         $this->assertTrue($u->isActivated());
     }
 
-    public function testSetConfirmationHash()
+    public function testSetActivationHash()
     {
         $u = new User;
-        $this->assertEquals(null, $u->getConfirmationHash());
-        $u->setConfirmationHash();
-        $this->assertNotEquals(null, $u->getConfirmationHash());
+        $this->assertEquals(null, $u->getActivationHash());
+        $u->setActivationHash();
+        $this->assertNotEquals(null, $u->getActivationHash());
     }
 
     /**
      * @expectedException \Larrytech\Auth\Models\UserActivationException
      */
-    public function testSetConfirmationHashThrowsException()
+    public function testSetActivationHashThrowsException()
     {
         $u = new User;
         $u->activate();
         $this->assertTrue($u->isActivated());
-        $u->setConfirmationHash();
+        $u->setActivationHash();
     }
 
     public function testSuspendUserIsSuspended()

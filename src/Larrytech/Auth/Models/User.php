@@ -36,7 +36,7 @@ class User extends Model implements UserInterface, RemindableInterface {
     public function activate()
     {
         $this->activated = 1;
-        $this->confirmation_hash = "";
+        $this->activation_hash = "";
     }
 
     /**
@@ -73,6 +73,16 @@ class User extends Model implements UserInterface, RemindableInterface {
     }
 
     /**
+     * Gets the activation hash.
+     *
+     * @return string
+     */
+    public function getActivationHash()
+    {
+        return $this->activation_hash;
+    }
+
+    /**
      * Get the unique identifier for the user.
      *
      * @return mixed
@@ -90,16 +100,6 @@ class User extends Model implements UserInterface, RemindableInterface {
     public function getAuthPassword()
     {
         return $this->password;
-    }
-
-    /**
-     * Gets the confirmation hash.
-     *
-     * @return string
-     */
-    public function getConfirmationHash()
-    {
-        return $this->confirmation_hash;
     }
 
     /**
@@ -266,19 +266,6 @@ class User extends Model implements UserInterface, RemindableInterface {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function save(array $options = array())
-    {
-        if ( ! $this->exists)
-        {
-            $this->setConfirmationHash();
-        }
-
-        return parent::save($options);
-    }
-
-    /**
      * Orders the users by last name and first name.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -290,16 +277,18 @@ class User extends Model implements UserInterface, RemindableInterface {
     }
     
     /**
-     * Sets a confirmation hash.
+     * Sets the activation hash.
+     *
+     * @return void
      */
-    public function setConfirmationHash()
+    public function setActivationHash()
     {
         if ($this->isActivated())
         {
             throw new UserActivationException;
         }
 
-        $this->confirmation_hash = str_random(60);
+        $this->activation_hash = str_random(60);
     }
 
     /**
